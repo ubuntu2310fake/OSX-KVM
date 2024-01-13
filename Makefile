@@ -1,5 +1,5 @@
 # export SHORTNAME=monterey
-DISK_SIZE := 256G
+DISK_SIZE := 120G
 
 all: BaseSystem.img mac_hdd_ng.img
 
@@ -10,7 +10,4 @@ BaseSystem.dmg:
 	./fetch-macOS-v2.py --shortname=$(SHORTNAME)
 
 mac_hdd_ng.img:
-	qemu-img create -f qcow2 mac_hdd_ng.img ${DISK_SIZE}
-
-clean:
-	rm -rf BaseSystem{.dmg,.img,.chunklist}
+	sudo qemu-img create -f qcow2 mac_hdd_ng.img ${DISK_SIZE}
