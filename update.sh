@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "dang cap nhat database"
 
 sudo apt update && sudo apt upgrade -y
