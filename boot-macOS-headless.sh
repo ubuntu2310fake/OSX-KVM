@@ -23,7 +23,7 @@
 # NOTE: Tweak the "MY_OPTIONS" line in case you are having booting problems!
 ############################################################################
 
-MY_OPTIONS="+ssse3,+xsave,+xsaveopt"
+MY_OPTIONS="+ssse3,+sse4.2,+popcnt,+aes,+xsave,+xsaveopt,check"
 
 # This script works for Big Sur, Catalina, Mojave, and High Sierra. Tested with
 # macOS 10.15.6, macOS 10.14.6, and macOS 10.13.6.
@@ -57,14 +57,12 @@ args=(
   -device ich9-ahci,id=sata
   -drive id=OpenCoreBoot,if=none,snapshot=on,format=qcow2,file="$REPO_PATH/OpenCore/OpenCore.qcow2"
   -device ide-hd,bus=sata.2,drive=OpenCoreBoot
-  -drive id=InstallMedia,if=virtio,file="$REPO_PATH/BaseSystem.img",format=raw
+  -device ide-hd,bus=sata.3,drive=InstallMedia
+  -drive id=InstallMedia,if=none,file="./BaseSystem.img",format=raw
   -drive id=MacHDD,if=virtio,file="/tmp/mac_hdd_ng.img",format=qcow2
-  -netdev user,id=net0,hostfwd=tcp::2222-:22 -net nic,model=virtio-net-pci,netdev=net0,macaddr=52:54:00:c9:18:27
+  -netdev user,id=net0 -net nic,model=virtio-net-pci,netdev=net0,macaddr=52:54:00:c9:18:27
   -monitor stdio
   -device qxl-vga
-  -device virtio-vga
-  -device vmware-svga
-  -display none
   -vnc 0.0.0.0:1,password=off -k en-us
 )
 
